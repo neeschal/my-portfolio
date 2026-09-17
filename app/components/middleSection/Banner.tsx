@@ -13,7 +13,7 @@ const Banner = ({ ref, name, clickFn, cRef }: BannerRef) => {
   return (
     <div
       ref={ref}
-      className="relative flex items-stretch px-16 justify-between bg-component-background 2xl:mb-40 mb-32"
+      className="relative flex items-stretch px-16 justify-between bg-component-background 2xl:mb-48 mb-32"
     >
       <div className="w-125 shrink-0 flex flex-col justify-center">
         <h1 className="font-sans text-5xl font-bold">
