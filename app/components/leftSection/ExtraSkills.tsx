@@ -10,7 +10,10 @@ export default function ExtraSkills() {
       <ExtraSkill skills="HTML, CSS, Javascript" />
       <ExtraSkill skills="Postgres, Mongodb" />
       <hr className="my-4 text-gray-200 drop-shadow-2xl"></hr>
-      <a href="/resume.docx" download="resume.docx">
+      <a
+        href={`${process.env.NEXT_PUBLIC_BASE_PATH}/resume.docx`}
+        download="resume.docx"
+      >
         <button className="w-full flex items-center justify-center gap-4 bg-primary p-2 hover:text-white hover:cursor-pointer">
           DOWNLOAD CV <RiDownload2Fill />
         </button>
