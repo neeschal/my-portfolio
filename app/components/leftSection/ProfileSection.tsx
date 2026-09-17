@@ -7,7 +7,7 @@ export const ProfileSection = () => {
         <div className="flex flex-col justify-center items-center">
           <div className="rounded-full w-48 h-48 overflow-hidden">
             <Image
-              src="/images/IMG_0395.JPG"
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH}/images/IMG_0395.JPG`}
               width={200}
               height={200}
               alt="profile image"

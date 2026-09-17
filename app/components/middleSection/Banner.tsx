@@ -38,7 +38,7 @@ const Banner = ({ ref, name, clickFn, cRef }: BannerRef) => {
       </div>
       <div className="relative flex-1 h-125">
         <Image
-          src="/images/image_with_white_bg.png"
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH}/images/image_with_white_bg.png`}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover"
