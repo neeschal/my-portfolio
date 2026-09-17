@@ -2,9 +2,10 @@ import React from "react";
 import ProfileDetail from "./ProfileDetail";
 
 const ProfileDetails = () => {
+  const age = (new Date().getFullYear() - 1994).toString();
   return (
     <div>
-      <ProfileDetail title="Age" value="24" />
+      <ProfileDetail title="Age" value={age} />
       <ProfileDetail
         title="Freelance"
         value="Available"
