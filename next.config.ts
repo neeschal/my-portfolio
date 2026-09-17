@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
-const basePath = "/my-portfolio";
+const isGithubActions = process.env.GITHUB_ACTINONS === "true";
+const basePath = isGithubActions ? "/my-portfolio" : "";
 
 const nextConfig: NextConfig = {
   /* config options here */

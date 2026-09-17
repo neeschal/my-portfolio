@@ -31,7 +31,7 @@ const ContactUs = ({ ref }: ContactProps) => {
       >
         <div>
           <label htmlFor="email" className="text-paragraph text-xl">
-            Email
+            Your Email
           </label>
           <br />
           <input
