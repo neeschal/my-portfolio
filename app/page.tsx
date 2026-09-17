@@ -1,69 +1,136 @@
-import Image from "next/image";
+"use client";
+import React, { useEffect, useRef, useState } from "react";
+import { ProfileSection } from "./components/leftSection/ProfileSection";
+import ProfileDetails from "./components/leftSection/ProfileDetails";
+import Languages from "./components/leftSection/Languages";
+import Skills from "./components/leftSection/Skills";
+import ExtraSkills from "./components/leftSection/ExtraSkills";
+import Banner from "./components/middleSection/Banner";
+import Services from "./components/middleSection/Services";
+import Education from "./components/middleSection/Education";
+import WorkHistory from "./components/middleSection/WorkHistory";
+import ContactUs from "./components/middleSection/ContactUs";
+import LocationMap from "./components/middleSection/LocationMap";
+import { RiHome2Fill } from "react-icons/ri";
+import { DiCodeBadge } from "react-icons/di";
+import { FaUserGraduate } from "react-icons/fa";
+import { RiBriefcase4Fill } from "react-icons/ri";
+import { FaCommentAlt } from "react-icons/fa";
+import Footer from "./components/middleSection/Footer";
+import NavBtn from "./components/rightSection/NavBtn";
+import Certificates from "./components/leftSection/Certificates";
 
 export default function Home() {
+  const homeRef = useRef<HTMLDivElement>(null);
+  const servicesRef = useRef<HTMLDivElement>(null);
+  const eduRef = useRef<HTMLDivElement>(null);
+  const workRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
+
+  const [active, setActive] = useState("Home");
+
+  const scrollToSection = (
+    ref: React.RefObject<HTMLDivElement | null>,
+    name: string,
+  ) => {
+    setActive(name);
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  useEffect(() => {
+    const sections = [
+      { id: "Home", ref: homeRef },
+      { id: "Services", ref: servicesRef },
+      { id: "Education", ref: eduRef },
+      { id: "Work", ref: workRef },
+      { id: "Contact", ref: contactRef },
+    ];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const match = sections.find((s) => s.ref.current === entry.target);
+            if (match) setActive(match.id);
+          }
+        });
+      },
+      {
+        root: null,
+        threshold: 0.6,
+      },
+    );
+
+    sections.forEach(({ ref }) => {
+      if (ref.current) observer.observe(ref.current);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="flex bg-background gap-10 2xl:px-48">
+      <div className="bg-component-background w-[20%] h-fit pt-8 px-8">
+        <ProfileSection />
+        <ProfileDetails />
+        <Languages />
+        <Skills />
+        <Certificates />
+        <ExtraSkills />
+      </div>
+      <div className="w-[70%] mr-[11%]">
+        <Banner
+          ref={homeRef}
+          name="Contact"
+          clickFn={scrollToSection}
+          cRef={contactRef}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+        <Services ref={servicesRef} />
+        <Education ref={eduRef} />
+        <WorkHistory ref={workRef} />
+        <ContactUs ref={contactRef} />
+        <LocationMap />
+        <Footer />
+      </div>
+      <div className="flex flex-col items-center bg-component-background h-screen w-[8%] fixed right-0 top-0 2xl:right-47 2xl:w-[7%]">
+        <div className="flex flex-col h-2/3 mt-40 items-center justify-around">
+          <NavBtn
+            ref={homeRef}
+            Icon={RiHome2Fill}
+            clickfn={scrollToSection}
+            active={active == "Home"}
+            name="Home"
+          />
+          <NavBtn
+            ref={servicesRef}
+            Icon={DiCodeBadge}
+            clickfn={scrollToSection}
+            active={active == "Services"}
+            name="Services"
+          />
+          <NavBtn
+            ref={eduRef}
+            Icon={FaUserGraduate}
+            clickfn={scrollToSection}
+            active={active == "Education"}
+            name="Education"
+          />
+          <NavBtn
+            ref={workRef}
+            Icon={RiBriefcase4Fill}
+            clickfn={scrollToSection}
+            active={active == "Work"}
+            name="Work"
+          />
+          <NavBtn
+            ref={contactRef}
+            Icon={FaCommentAlt}
+            clickfn={scrollToSection}
+            active={active == "Contact"}
+            name="Contact"
+          />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </div>
     </div>
   );
 }
